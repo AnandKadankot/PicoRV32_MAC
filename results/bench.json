@@ -1,0 +1,322 @@
+{
+  "rv32ic": {
+    "description": "RV32IC, no multiplier (libgcc __mulsi3)",
+    "generics": {},
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 890387,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 692465,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 2629156,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "rv32imc_mul": {
+    "description": "RV32IMC, PicoRV32 iterative multiplier",
+    "generics": {
+      "ENABLE_MUL": 1
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 74805,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 77876,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 319903,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "rv32imc_fastmul": {
+    "description": "RV32IMC, PicoRV32 DSP fast multiplier",
+    "generics": {
+      "ENABLE_FAST_MUL": 1
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 39989,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 43060,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 180639,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "fastmul_mac_p1": {
+    "description": "RV32IMC fast mul + MAC unit (2-cycle)",
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 1
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 39989,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 43060,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 165537,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot32_mac": {
+        "cycles": 42044,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac": {
+        "cycles": 34873,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac16x2": {
+        "cycles": 17491,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_mac16x2": {
+        "cycles": 78513,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "fastmul_mac_p0": {
+    "description": "RV32IMC fast mul + MAC unit (1-cycle)",
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 0
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 39989,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 43060,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 165537,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot32_mac": {
+        "cycles": 41018,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac": {
+        "cycles": 33847,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac16x2": {
+        "cycles": 16977,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_mac16x2": {
+        "cycles": 75953,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "fastmul_mac_p2": {
+    "description": "RV32IMC fast mul + MAC unit (3-cycle, DSP-pipelined)",
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 2
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 39989,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 43060,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 165537,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot32_mac": {
+        "cycles": 43070,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac": {
+        "cycles": 35899,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac16x2": {
+        "cycles": 18005,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_mac16x2": {
+        "cycles": 81073,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "nc_fastmul": {
+    "description": "RV32IM (no C), DSP fast multiplier",
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "COMPRESSED_ISA": 0
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 39986,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 39985,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 169392,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  },
+  "nc_fastmul_mac_p1": {
+    "description": "RV32IM (no C) fast mul + MAC unit (2-cycle)",
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 1,
+      "COMPRESSED_ISA": 0
+    },
+    "exit_code": 0,
+    "kernels": {
+      "dot32_c": {
+        "cycles": 39986,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_c": {
+        "cycles": 39985,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_c": {
+        "cycles": 169396,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot32_mac": {
+        "cycles": 35894,
+        "value": -1150652416,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac": {
+        "cycles": 35893,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "dot16_mac16x2": {
+        "cycles": 17997,
+        "value": 239709528,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      },
+      "matmul16_mac16x2": {
+        "cycles": 83380,
+        "value": 918678243,
+        "fw_check": "PASS",
+        "host_check": "PASS"
+      }
+    }
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "rv32ic": {
+    "generics": {},
+    "runs": [
+      {
+        "period_ns": 4.0,
+        "wns_ns": -3.184,
+        "fmax_mhz": 139.2,
+        "lut": 1254,
+        "ff": 611,
+        "dsp": 0,
+        "carry4": 91,
+        "dynamic_power_w": 0.044,
+        "crit_start": "cpu/latched_branch_reg_replica/C",
+        "crit_end": "cpu/mem_rdata_q_reg[26]/D",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 5.0,
+        "wns_ns": -1.707,
+        "fmax_mhz": 149.1,
+        "lut": 1250,
+        "ff": 612,
+        "dsp": 0,
+        "carry4": 91,
+        "dynamic_power_w": 0.03,
+        "crit_start": "cpu/prefetched_high_word_reg_replica/C",
+        "crit_end": "cpu/mem_rdata_q_reg[24]/D",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 6.0,
+        "wns_ns": -1.081,
+        "fmax_mhz": 141.2,
+        "lut": 1237,
+        "ff": 613,
+        "dsp": 0,
+        "carry4": 91,
+        "dynamic_power_w": 0.031,
+        "crit_start": "cpu/latched_store_reg_replica/C",
+        "crit_end": "cpu/decoded_rs1_reg_rep[1]/D",
+        "crit_levels": 7
+      }
+    ],
+    "best": {
+      "period_ns": 5.0,
+      "wns_ns": -1.707,
+      "fmax_mhz": 149.1,
+      "lut": 1250,
+      "ff": 612,
+      "dsp": 0,
+      "carry4": 91,
+      "dynamic_power_w": 0.03,
+      "crit_start": "cpu/prefetched_high_word_reg_replica/C",
+      "crit_end": "cpu/mem_rdata_q_reg[24]/D",
+      "crit_levels": 7
+    }
+  },
+  "rv32imc_mul": {
+    "generics": {
+      "ENABLE_MUL": 1
+    },
+    "runs": [
+      {
+        "period_ns": 4.0,
+        "wns_ns": -3.308,
+        "fmax_mhz": 136.8,
+        "lut": 1545,
+        "ff": 889,
+        "dsp": 0,
+        "carry4": 91,
+        "dynamic_power_w": 0.068,
+        "crit_start": "cpu/reg_next_pc_reg[1]/C",
+        "crit_end": "cpu/mem_rdata_q_reg[12]/CE",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 5.0,
+        "wns_ns": -1.922,
+        "fmax_mhz": 144.5,
+        "lut": 1535,
+        "ff": 891,
+        "dsp": 0,
+        "carry4": 91,
+        "dynamic_power_w": 0.058,
+        "crit_start": "cpu/prefetched_high_word_reg_replica/C",
+        "crit_end": "cpu/mem_rdata_q_reg[12]/CE",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 6.0,
+        "wns_ns": -1.098,
+        "fmax_mhz": 140.9,
+        "lut": 1524,
+        "ff": 888,
+        "dsp": 0,
+        "carry4": 91,
+        "dynamic_power_w": 0.047,
+        "crit_start": "cpu/latched_branch_reg/C",
+        "crit_end": "cpu/mem_rdata_q_reg[23]/CE",
+        "crit_levels": 7
+      }
+    ],
+    "best": {
+      "period_ns": 5.0,
+      "wns_ns": -1.922,
+      "fmax_mhz": 144.5,
+      "lut": 1535,
+      "ff": 891,
+      "dsp": 0,
+      "carry4": 91,
+      "dynamic_power_w": 0.058,
+      "crit_start": "cpu/prefetched_high_word_reg_replica/C",
+      "crit_end": "cpu/mem_rdata_q_reg[12]/CE",
+      "crit_levels": 7
+    }
+  },
+  "rv32imc_fastmul": {
+    "generics": {
+      "ENABLE_FAST_MUL": 1
+    },
+    "runs": [
+      {
+        "period_ns": 4.0,
+        "wns_ns": -2.84,
+        "fmax_mhz": 146.2,
+        "lut": 1388,
+        "ff": 712,
+        "dsp": 4,
+        "carry4": 103,
+        "dynamic_power_w": 0.066,
+        "crit_start": "cpu/latched_branch_reg/C",
+        "crit_end": "cpu/mem_rdata_q_reg[28]/CE",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 5.0,
+        "wns_ns": -2.282,
+        "fmax_mhz": 137.3,
+        "lut": 1385,
+        "ff": 706,
+        "dsp": 4,
+        "carry4": 103,
+        "dynamic_power_w": 0.05,
+        "crit_start": "cpu/latched_branch_reg/C",
+        "crit_end": "cpu/decoded_rs1_reg_rep_rep[0]/D",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 6.0,
+        "wns_ns": -0.956,
+        "fmax_mhz": 143.8,
+        "lut": 1386,
+        "ff": 738,
+        "dsp": 4,
+        "carry4": 103,
+        "dynamic_power_w": 0.043,
+        "crit_start": "cpu/mem_do_rinst_reg/C",
+        "crit_end": "cpu/mem_rdata_q_reg[20]/CE",
+        "crit_levels": 7
+      }
+    ],
+    "best": {
+      "period_ns": 4.0,
+      "wns_ns": -2.84,
+      "fmax_mhz": 146.2,
+      "lut": 1388,
+      "ff": 712,
+      "dsp": 4,
+      "carry4": 103,
+      "dynamic_power_w": 0.066,
+      "crit_start": "cpu/latched_branch_reg/C",
+      "crit_end": "cpu/mem_rdata_q_reg[28]/CE",
+      "crit_levels": 7
+    }
+  },
+  "fastmul_mac_p1": {
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 1
+    },
+    "runs": [
+      {
+        "period_ns": 4.0,
+        "wns_ns": -4.489,
+        "fmax_mhz": 117.8,
+        "lut": 1493,
+        "ff": 854,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.075,
+        "crit_start": "g_mac.mac/p32__0/CLK",
+        "crit_end": "g_mac.mac/prod_reg[31]/D",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 5.0,
+        "wns_ns": -3.489,
+        "fmax_mhz": 117.8,
+        "lut": 1487,
+        "ff": 854,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.06,
+        "crit_start": "g_mac.mac/p32__0/CLK",
+        "crit_end": "g_mac.mac/prod_reg[31]/D",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 6.0,
+        "wns_ns": -2.578,
+        "fmax_mhz": 116.6,
+        "lut": 1483,
+        "ff": 869,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.05,
+        "crit_start": "g_mac.mac/p32__0/CLK",
+        "crit_end": "g_mac.mac/prod_reg[29]/D",
+        "crit_levels": 7
+      }
+    ],
+    "best": {
+      "period_ns": 4.0,
+      "wns_ns": -4.489,
+      "fmax_mhz": 117.8,
+      "lut": 1493,
+      "ff": 854,
+      "dsp": 9,
+      "carry4": 115,
+      "dynamic_power_w": 0.075,
+      "crit_start": "g_mac.mac/p32__0/CLK",
+      "crit_end": "g_mac.mac/prod_reg[31]/D",
+      "crit_levels": 7
+    }
+  },
+  "fastmul_mac_p0": {
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 0
+    },
+    "runs": [
+      {
+        "period_ns": 4.0,
+        "wns_ns": -4.129,
+        "fmax_mhz": 123.0,
+        "lut": 1496,
+        "ff": 800,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.089,
+        "crit_start": "g_mac.mac/p32__0/CLK",
+        "crit_end": "g_mac.mac/prod_reg[29]/D",
+        "crit_levels": 6
+      },
+      {
+        "period_ns": 5.0,
+        "wns_ns": -3.129,
+        "fmax_mhz": 123.0,
+        "lut": 1479,
+        "ff": 793,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.07,
+        "crit_start": "g_mac.mac/p32__0/CLK",
+        "crit_end": "g_mac.mac/prod_reg[29]/D",
+        "crit_levels": 6
+      },
+      {
+        "period_ns": 6.0,
+        "wns_ns": -2.129,
+        "fmax_mhz": 123.0,
+        "lut": 1485,
+        "ff": 801,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.059,
+        "crit_start": "g_mac.mac/p32__0/CLK",
+        "crit_end": "g_mac.mac/prod_reg[29]/D",
+        "crit_levels": 6
+      }
+    ],
+    "best": {
+      "period_ns": 4.0,
+      "wns_ns": -4.129,
+      "fmax_mhz": 123.0,
+      "lut": 1496,
+      "ff": 800,
+      "dsp": 9,
+      "carry4": 115,
+      "dynamic_power_w": 0.089,
+      "crit_start": "g_mac.mac/p32__0/CLK",
+      "crit_end": "g_mac.mac/prod_reg[29]/D",
+      "crit_levels": 6
+    }
+  },
+  "fastmul_mac_p2": {
+    "generics": {
+      "ENABLE_FAST_MUL": 1,
+      "WITH_MAC": 1,
+      "MAC_PIPE": 2
+    },
+    "runs": [
+      {
+        "period_ns": 4.0,
+        "wns_ns": -3.24,
+        "fmax_mhz": 138.1,
+        "lut": 1516,
+        "ff": 916,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.076,
+        "crit_start": "cpu/mem_valid_reg_replica/C",
+        "crit_end": "cpu/mem_rdata_q_reg[12]/CE",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 5.0,
+        "wns_ns": -2.173,
+        "fmax_mhz": 139.4,
+        "lut": 1504,
+        "ff": 948,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.045,
+        "crit_start": "cpu/clear_prefetched_high_word_q_reg/C",
+        "crit_end": "cpu/decoded_rs1_reg_rep_rep[1]/D",
+        "crit_levels": 7
+      },
+      {
+        "period_ns": 6.0,
+        "wns_ns": -0.712,
+        "fmax_mhz": 149.0,
+        "lut": 1488,
+        "ff": 875,
+        "dsp": 9,
+        "carry4": 115,
+        "dynamic_power_w": 0.052,
+        "crit_start": "cpu/latched_branch_reg/C",
+        "crit_end": "cpu/decoded_rs1_reg_rep_rep[1]/D",
+        "crit_levels": 7
+      }
+    ],
+    "best": {
+      "period_ns": 6.0,
+      "wns_ns": -0.712,
+      "fmax_mhz": 149.0,
+      "lut": 1488,
+      "ff": 875,
+      "dsp": 9,
+      "carry4": 115,
+      "dynamic_power_w": 0.052,
+      "crit_start": "cpu/latched_branch_reg/C",
+      "crit_end": "cpu/decoded_rs1_reg_rep_rep[1]/D",
+      "crit_levels": 7
+    }
+  }
+}
