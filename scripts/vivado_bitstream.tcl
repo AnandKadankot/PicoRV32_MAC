@@ -33,6 +33,13 @@ report_timing_summary -max_paths 10 -file $outdir/timing.rpt
 report_clock_utilization           -file $outdir/clocks.rpt
 report_power                       -file $outdir/power.rpt
 report_drc                         -file $outdir/drc.rpt
+report_methodology                 -file $outdir/methodology.rpt
+report_clock_networks              -file $outdir/clock_networks.rpt
+report_design_analysis -congestion -file $outdir/congestion.rpt
+report_design_analysis -complexity -file $outdir/complexity.rpt
+report_design_analysis -timing -max_paths 10 -file $outdir/path_analysis.rpt
+report_route_status                -file $outdir/route_status.rpt
+write_checkpoint -force $outdir/fpga_top_routed.dcp
 write_bitstream -force $outdir/fpga_top.bit
 
 set crit [get_timing_paths -max_paths 1 -setup]
@@ -43,5 +50,14 @@ puts $fh "wns [get_property SLACK $crit]"
 puts $fh "whs [get_property SLACK [get_timing_paths -max_paths 1 -hold]]"
 puts $fh "crit_start [get_property STARTPOINT_PIN $crit]"
 puts $fh "crit_end [get_property ENDPOINT_PIN $crit]"
+puts $fh "crit_levels [get_property LOGIC_LEVELS $crit]"
+puts $fh "crit_skew [get_property SKEW $crit]"
+puts $fh "crit_datapath [get_property DATAPATH_DELAY $crit]"
+set worst_skew 0.0
+foreach p [get_timing_paths -max_paths 1000 -nworst 1 -setup] {
+	set sk [get_property SKEW $p]
+	if {$sk ne "" && abs($sk) > abs($worst_skew)} { set worst_skew $sk }
+}
+puts $fh "worst_setup_path_skew $worst_skew"
 puts $fh "bitstream [file exists $outdir/fpga_top.bit]"
 close $fh

@@ -129,6 +129,8 @@ so the same firmware runs unchanged.
 | resources | 1,705 LUT · 959 FF · 32 BRAM36 · 9 DSP48 · 1 MMCM |
 | on-chip power (Vivado estimate) | 0.243 W |
 | DRC | no errors (DSP-pipelining advisories only) |
+| routing / congestion | all 2,797 nets routed; congestion level 0–1 of 8 (no congested regions) |
+| clock | 1 MMCM + 1 BUFG, 4 clock regions; critical-path skew −0.330 ns |
 | bitstream | generated |
 
 Before building the bitstream, `sim/tb_fpga_top.v` simulates this exact top level
