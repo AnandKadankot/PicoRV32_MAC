@@ -4,7 +4,8 @@ A multiply-accumulate (MAC) coprocessor for the open-source
 [PicoRV32](https://github.com/YosysHQ/picorv32) RISC-V core, attached through its
 PCPI coprocessor interface. It adds four custom instructions, including a packed
 2×int16 MAC. The project covers RTL, verification, compiler support (`.insn`),
-benchmark firmware and Vivado implementation on a Zynq-7020 (xc7z020clg400-1).
+benchmark firmware, Vivado implementation for a Zynq-7020 (xc7z020clg400-1), and a
+complete bitstream-ready system (core + block RAM + UART) that closes timing at 125 MHz.
 
 ![Execution time](results/exec_time.png)
 
@@ -113,6 +114,26 @@ The resulting inner loop of the int16 dot product is
    already been called with the same arguments to compute the reference result
    (`cycles=6`). The kernels use `__attribute__((noipa))` to prevent this.
 
+### Full system to bitstream
+
+`rtl/fpga_top.v` wraps the final core in a complete FPGA system: a 125 MHz MMCM clock,
+synchronous reset, 128 KiB block RAM preloaded with the benchmark firmware, a UART
+transmitter replacing the simulation console, and status LEDs. The pinout is for the PYNQ-Z2 board
+(`constraints/pynq_z2.xdc`). The memory map and RAM timing match the simulation testbench,
+so the same firmware runs unchanged.
+
+| metric | value |
+|---|---|
+| core clock | **125 MHz**, all timing constraints met (WNS +0.032 ns, WHS +0.036 ns) |
+| resources | 1,705 LUT · 959 FF · 32 BRAM36 · 9 DSP48 · 1 MMCM |
+| on-chip power (Vivado estimate) | 0.243 W |
+| DRC | no errors (DSP-pipelining advisories only) |
+| bitstream | generated |
+
+Before building the bitstream, `sim/tb_fpga_top.v` simulates this exact top level
+(MMCM, reset, block RAM, UART) and decodes the UART output. Every kernel prints PASS with
+cycle counts identical to the results above. Details: [`results/fpga_system.md`](results/fpga_system.md).
+
 ## Verification
 
 - **Unit test** ([`sim/tb_pcpi_mac.v`](sim/tb_pcpi_mac.v)): drives PCPI exactly as
@@ -135,6 +156,10 @@ git clone https://github.com/YosysHQ/picorv32 third_party/picorv32   # tested at
 python3 scripts/run_bench.py     # build firmware, simulate all configs -> results/bench.*
 python3 scripts/run_vivado.py    # implement all configs (JOBS=6 parallel) -> results/ppa.*
 python3 scripts/make_plots.py    # -> results/exec_time.png
+
+# full system: simulate the FPGA top level, then build the bitstream
+#   (xvlog/xelab need glbl.v and -L unisims_ver for the MMCM; see results/fpga_system.md)
+vivado -mode batch -source scripts/vivado_bitstream.tcl -tclargs build/bit125 125 explore
 ```
 
 ## Layout
@@ -142,8 +167,11 @@ python3 scripts/make_plots.py    # -> results/exec_time.png
 ```
 rtl/pcpi_mac.v          MAC coprocessor (decode, DSP pipeline, accumulator)
 rtl/core_top.v          PicoRV32 + optional MAC; simulation and synthesis top
+rtl/fpga_top.v          complete FPGA system: MMCM, reset, block RAM, UART, LEDs
+constraints/            PYNQ-Z2 pin and clock constraints
 sim/tb_pcpi_mac.v       self-checking unit testbench
 sim/tb_soc.v            128 KiB RAM + console/exit MMIO system testbench
+sim/tb_fpga_top.v       full FPGA top-level simulation with UART decoder
 sw/                     start.S, linker script, mac.h intrinsics, bench.c
 scripts/                simulation, Vivado and plotting drivers
 results/                measured data (JSON + Markdown) and chart
@@ -151,10 +179,11 @@ results/                measured data (JSON + Markdown) and chart
 
 ## Scope and limitations
 
-- Results are from simulation and Vivado implementation. They were not run on
-  physical hardware.
-- Out-of-context implementation: memory-bus ports are not tied to device pins,
-  so Fmax reflects the core's internal register-to-register paths.
+- Results are from simulation and Vivado implementation. The bitstream has been
+  generated but not run on a physical board.
+- The configuration comparison table uses out-of-context implementation: memory-bus ports
+  are not tied to device pins, so its Fmax reflects the core's internal
+  register-to-register paths. The full-system build above includes block RAM, I/O and clocking.
 - The test memory responds in one cycle. Slower memory would shrink the relative
   benefit, because loads take a larger share of each loop.
 - "M" in the firmware builds is Zmmul (multiply only). The cores are built
