@@ -99,6 +99,10 @@ module tb_pcpi_mac;
 		repeat (4) @(posedge clk);
 		resetn = 1;
 
+		// accumulator must be 0 straight after reset (read it before anything else)
+		issue(insn(7'd2, 7'b0001011, 3'b000), 0, 0, 1);          // macrd  0
+		issue(insn(7'd0, 7'b0001011, 3'b000), 2, 3, 1);          // mac    6
+
 		// directed: reset accumulator, small dot product, read back
 		issue(insn(7'd1, 7'b0001011, 3'b000), 3, 4, 1);          // macrst 12
 		issue(insn(7'd0, 7'b0001011, 3'b000), 5, 6, 1);          // mac    42
@@ -119,6 +123,13 @@ module tb_pcpi_mac;
 		// random stream
 		for (i = 0; i < N_RANDOM; i = i + 1)
 			issue(insn({5'd0, $random} & 7'h03, 7'b0001011, 3'b000), $random, $random, 1);
+
+		// reset in the middle of operation: accumulator must return to 0
+		@(negedge clk); resetn = 0;
+		repeat (2) @(negedge clk); resetn = 1;
+		ref_acc = 0;
+		issue(insn(7'd2, 7'b0001011, 3'b000), 0, 0, 1);          // macrd  0
+		issue(insn(7'd3, 7'b0001011, 3'b000), $random, $random, 1);
 
 		if (errors == 0)
 			$display("PCPI_MAC UNIT TEST PASS (PIPE=%0d): %0d checks, latency %0d", PIPE, checks, expected_latency);

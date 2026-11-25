@@ -101,13 +101,14 @@ The resulting inner loop of the int16 dot product is
 1. **Instruction count, not multiply latency, limits PicoRV32.** PicoRV32 is not
    pipelined and takes about 4–6 cycles per instruction. A scalar `mac` that
    fuses `mul` + `add` saves only one instruction per element. With alignment
-   effects removed (finding 2), it gives just **1.11×** (39,986 → 35,894 cycles,
-   exactly 4 cycles saved per element). The packed `mac16x2` halves both loads and
+   effects removed (finding 2), it gives just **1.11×** (39,986 → 35,894 cycles
+   on the non-compressed build with the 2-cycle MAC, exactly 4 cycles saved per element). The packed `mac16x2` halves both loads and
    loop iterations, which is where the 2.2–2.4× comes from.
 2. **Compressed-instruction alignment matters.** With RVC enabled, a 32-bit
    instruction at a 2-byte-aligned address costs PicoRV32 an extra memory fetch. In the
    scalar `dot32_mac` loop, 4 of 6 instructions ended up at such addresses, which
-   made it *slower* than the C loop (42,044 vs 39,989 cycles). This was confirmed
+   made it *slower* than the C loop (43,070 vs 39,989 cycles with the final
+   3-cycle MAC; 42,044 with the 2-cycle MAC). This was confirmed
    by re-running both on RV32IM without compression (`nc_*` columns in
    `results/bench.md`).
 3. **A benchmark pitfall.** GCC removed a timed call to `dot32_c` because it had
@@ -136,12 +137,18 @@ cycle counts identical to the results above. Details: [`results/fpga_system.md`]
 
 ## Verification
 
-- **Unit test** ([`sim/tb_pcpi_mac.v`](sim/tb_pcpi_mac.v)): drives PCPI exactly as
-  PicoRV32 does, with directed, corner-case and 20,000 random operations. It
-  checks results, latency and the accumulator against a reference model, and
-  confirms foreign encodings are ignored. 20,265 checks pass for each of
-  PIPE = 0, 1 and 2. A mutation test (high-half product removed from `mac16x2`)
-  is caught with 9,964 failures.
+- **Unit test** ([`sim/tb_pcpi_mac.v`](sim/tb_pcpi_mac.v), run by
+  `scripts/run_unit_tests.py`): drives PCPI exactly as PicoRV32 does, with directed,
+  corner-case and 20,000 random operations, plus checks straight after reset and after a
+  reset in mid-operation. It checks results, latency and the accumulator against a
+  reference model, and confirms foreign encodings are ignored. **20,269 checks pass for
+  each of PIPE = 0, 1 and 2.**
+- **Mutation testing:** 10 realistic bugs are injected one at a time into the final design
+  (dropped or unsigned SIMD lane, wrong operand half, `macrst`/`macrd` semantics, decoder
+  ignoring funct3/funct7, re-issue while busy, wrong reset value). **All 10 are caught
+  (100%).** The first run caught 9 of 10: the wrong accumulator reset value survived because
+  the testbench never read the accumulator before overwriting it. The added post-reset
+  checks close that gap. Details: [`results/unit_tests.md`](results/unit_tests.md).
 - **System test:** each kernel's result is checked by the firmware against the
   plain-C reference and, independently, by `scripts/run_bench.py` against a
   Python model of the same data. All 8 configurations pass.
@@ -153,6 +160,7 @@ Vitis. Set `VIVADO_SETTINGS` and `TOOLCHAIN` if your install paths differ.
 
 ```sh
 git clone https://github.com/YosysHQ/picorv32 third_party/picorv32   # tested at ef203c2
+python3 scripts/run_unit_tests.py  # unit tests (PIPE 0/1/2) + 10 mutants -> results/unit_tests.*
 python3 scripts/run_bench.py     # build firmware, simulate all configs -> results/bench.*
 python3 scripts/run_vivado.py    # implement all configs (JOBS=6 parallel) -> results/ppa.*
 python3 scripts/make_plots.py    # -> results/exec_time.png

@@ -1,0 +1,82 @@
+{
+  "pipes": {
+    "0": {
+      "result": "PASS",
+      "checks": 20269,
+      "errors": 0
+    },
+    "1": {
+      "result": "PASS",
+      "checks": 20269,
+      "errors": 0
+    },
+    "2": {
+      "result": "PASS",
+      "checks": 20269,
+      "errors": 0
+    }
+  },
+  "mutants": {
+    "m01_drop_hi_lane": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 10169,
+      "description": "mac16x2 ignores the upper 16-bit lane"
+    },
+    "m02_unsigned_lanes": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 8771,
+      "description": "16-bit lanes multiplied as unsigned"
+    },
+    "m03_hi_lane_wrong_half": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 10169,
+      "description": "upper lane uses the low half of rs2"
+    },
+    "m04_macrst_accumulates": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 20261,
+      "description": "macrst adds to the old accumulator instead of replacing it"
+    },
+    "m05_macrd_updates_acc": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 7658,
+      "description": "macrd also writes the accumulator"
+    },
+    "m06_macrd_returns_sum": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 5075,
+      "description": "macrd returns acc + prod instead of acc"
+    },
+    "m07_decode_ignores_funct3": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 2,
+      "description": "decoder ignores funct3 (answers foreign instructions)"
+    },
+    "m08_decode_ignores_funct7": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 2,
+      "description": "decoder ignores funct7[6:2] (answers foreign instructions)"
+    },
+    "m09_reissue_while_busy": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 12663,
+      "description": "new operation can start while one is in flight"
+    },
+    "m10_acc_reset_value": {
+      "result": "FAIL",
+      "checks": 20269,
+      "errors": 4,
+      "description": "accumulator resets to 1 instead of 0"
+    }
+  },
+  "mutation_detection_rate_pct": 100.0
+}
